@@ -25,9 +25,9 @@
             clearAll: function () {
                 alert('1');
                 for (var i = 0; i < this.overlays.length; i++) {
-                    this.map.removeOverlay(overlays[i]);
+                    this.map.removeOverlay(this.overlays[i]);
                 }
-                overlays.length = 0
+                this.overlays.length = 0
             },
             getInfo() {
                 axios.get('api/info.php', {params: {id: this.id}})
@@ -51,8 +51,9 @@
             this.map.centerAndZoom(point, 13);
             this.map.enableScrollWheelZoom();
             this.map.addControl(new BMap.ScaleControl);
+            var vm = this;
             var overlaycomplete = function (e) {
-                this.overlays.push(e.overlay);
+                vm.overlays.push(e.overlay);
             };
             var styleOptions = {
                 strokeColor: "red",    //边线颜色。
@@ -63,7 +64,7 @@
                 strokeStyle: 'solid' //边线的样式，solid或dashed。
             }
             //实例化鼠标绘制工具
-            var drawingManager = new BMapLib.DrawingManager(map, {
+            var drawingManager = new BMapLib.DrawingManager(this.map, {
                 isOpen: false, //是否开启绘制模式
                 enableDrawingTool: true, //是否显示工具栏
                 drawingToolOptions: {
