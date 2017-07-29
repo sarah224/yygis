@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import $ from 'jquery'
+import store from './store'
 
 Vue.config.productionTip = false;
 Vue.config.debug = true;
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
 })

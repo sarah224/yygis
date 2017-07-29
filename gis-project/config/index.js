@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/api': {
-            target: 'http://loclhost/yygis/admin/',
+            target: 'http://localhost/yygis/admin/',
             changeOrigin: true,
             pathRewrite: {
                 '^/api': ''

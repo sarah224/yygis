@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <div class="form_box">
-            <form action="" method="post" enctype="multipart/form-data" class="form">
                 <div class="log_messages">
                     <img src="../assets/images/name.png" alt="">
                     <input type="text" id="name" autofocus="autofocus" required="required" v-model="name">
@@ -12,14 +11,16 @@
                 </div>
                 <!--<div class="submit" @click="login()">登录</div>-->
                 <div class="submit">
-                    <button @click="login"></button>
+                    <button @click="login">登录</button>
                 </div>
-            </form>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
+    import { mapMutations } from 'vuex'
+
     export default {
         data() {
             return {
@@ -28,10 +29,20 @@
             }
         },
         methods: {
+            ...mapMutations(['setId']),
             login() {
-                axios.post('yygis/login.php')
-                    .then(function (response) {
-                        console.log(response);
+                var params = new URLSearchParams();
+                params.append('name', this.name);
+                params.append('pwd', this.pwd);
+                axios.post('/api/login.php', params)
+                    .then(response => {
+                        console.log(response.data);
+                        if (response.data > 0) {
+                            this.setId(response.data);
+                            this.$router.push({ path: '/map' });
+                        } else {
+                            alert("登录失败");
+                        }
                     })
                     .catch(function (error) {
                         console.log(error);
